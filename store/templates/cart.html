@@ -1,0 +1,50 @@
+ {% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">Your Cart</h2>
+
+{% for item in items %}
+<div class="card p-3 mb-3 shadow-sm">
+
+    <div class="d-flex justify-content-between align-items-center">
+
+        <!-- Product Info -->
+        <div>
+            <h5>{{ item.product.name }}</h5>
+            <p>Price: ₹{{ item.product.price }}</p>
+            <p>Subtotal: ₹{{ item.subtotal }}</p>
+        </div>
+
+        <!-- Quantity -->
+        <div class="text-center">
+            <p>Quantity: {{ item.quantity }}</p>
+
+            <a href="{% url 'inc' item.product.id %}" class="btn btn-success btn-sm">+</a>
+            <a href="{% url 'dec' item.product.id %}" class="btn btn-warning btn-sm">-</a>
+        </div>
+
+        <!-- Remove -->
+        <div>
+            <a href="{% url 'remove_from_cart' item.product.id %}" 
+               class="btn btn-danger btn-sm">
+               Remove
+            </a>
+        </div>
+
+    </div>
+
+</div>
+{% empty %}
+<p>Cart is empty</p>
+{% endfor %}
+
+<hr>
+
+<h3>Total: ₹{{ total }}</h3>
+
+<a href="{% url 'checkout' %}" class="btn btn-success mt-3">
+    Checkout
+</a>
+
+{% endblock %}

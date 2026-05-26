@@ -1,0 +1,39 @@
+ {% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">Search Results</h2>
+
+<div class="row">
+
+    {% for p in products %}
+    <div class="col-md-3 mb-4">
+
+        <div class="card p-3 shadow-sm text-center">
+
+            {% if p.image %}
+                <img src="{{ p.image.url }}" 
+                     class="card-img-top mb-2"
+                     style="height:150px; object-fit:cover;">
+            {% endif %}
+
+            <h5>{{ p.name }}</h5>
+            <p class="fw-bold">₹{{ p.price }}</p>
+
+            <form action="{% url 'add_to_cart' p.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-dark w-100">
+                    Add to Cart
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+    {% empty %}
+    <p>No products found</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
